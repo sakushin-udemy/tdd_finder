@@ -53,7 +53,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
+              key: ValueKey('counter'),
               style: Theme.of(context).textTheme.headline4,
+            ),
+            Semantics(
+              label: 'semantics',
+              child: TextButton(
+                child: Text('add'),
+                onPressed: () {},
+              ),
             ),
           ],
         ),
