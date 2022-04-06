@@ -26,5 +26,62 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+
+    expect(find.text('1'), findsOneWidget);
+
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(find.byIcon(Icons.settings), findsNothing);
+
+    expect(find.byKey(ValueKey('counter')), findsOneWidget);
+
+    expect(find.widgetWithText(TextButton, 'add'), findsOneWidget);
+    expect(find.byType(TextButton), findsOneWidget);
+
+    expect(
+        find.widgetWithIcon(FloatingActionButton, Icons.add), findsOneWidget);
+
+    expect(find.byTooltip('Increment'), findsOneWidget);
+    expect(find.bySemanticsLabel('semantics'), findsOneWidget);
+
+    expect(
+        find.byWidgetPredicate((widget) => widget is Column), findsOneWidget);
+    expect(
+        find.byWidgetPredicate((widget) =>
+            widget is Column &&
+            widget.mainAxisAlignment == MainAxisAlignment.center),
+        findsOneWidget);
+    expect(
+        find.byWidgetPredicate((widget) =>
+            widget is Column &&
+            widget.mainAxisAlignment == MainAxisAlignment.start),
+        findsNothing);
+
+    expect(find.ancestor(of: find.text('add'), matching: find.byType(Center)),
+        findsOneWidget);
+    expect(find.descendant(of: find.byType(Center), matching: find.text('add')),
+        findsOneWidget);
+
+    expect(
+        find.byElementType(SingleChildRenderObjectElement), findsNWidgets(75));
+
+    expect(
+        find.byElementPredicate(
+            (element) => element is SingleChildRenderObjectElement),
+        findsNWidgets(77));
+  });
+
+  testWidgets('by Widget', (tester) async {
+    const childWidget = Padding(
+      padding: EdgeInsets.all(5),
+    );
+    await tester.pumpWidget(Container(
+      child: childWidget,
+    ));
+    expect(find.byWidget(childWidget), findsOneWidget);
+
+    const childWidget2 = Padding(
+      padding: EdgeInsets.all(5),
+    );
+    expect(find.byWidget(childWidget2), findsNothing);
   });
 }
